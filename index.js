@@ -123,7 +123,7 @@ console.log("End");
 // async operation is achieved inside beforeExit but there's a catch,
 // in the output the setTimeout is called again and again and goes in an infinite loop
 // because every time the event loop checks for call stack and triggers beforeExit, then we run an async function
-// when the async function is resolved, event loop will check for call stack and triggers beforeExit, then we run an async function
+// when the async function is resolved, event loop will check for call stack and queues and triggers beforeExit if empty, then we run an async function
 // and it goes on infinitely
 // so call process.exit(0) inside async function of beforeExit listener
 
@@ -167,7 +167,6 @@ process.on("beforeExit",() => {
     console.log("before exit called");
     setTimeout(() => {
         console.log("after 5 sec");
-        process.exit(0);
     },5000);
 })
 
